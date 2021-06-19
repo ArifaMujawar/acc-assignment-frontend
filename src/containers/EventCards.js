@@ -15,7 +15,6 @@ import FavoriteIcon from '@material-ui/icons/Favorite'
 import ShareIcon from '@material-ui/icons/Share'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
-import { CenterFocusStrong } from '@material-ui/icons'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -43,7 +42,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export default function RecipeReviewCard({ event }) {
+export default function EventCard({ event }) {
   const classes = useStyles()
   const [expanded, setExpanded] = React.useState(false)
 
