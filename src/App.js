@@ -5,6 +5,7 @@ import './App.css'
 function App() {
   return (
     <div className="App">
+      <h1>Accenture Assignment</h1>
       <Places />
       <hr />
       <Events />

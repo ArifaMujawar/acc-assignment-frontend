@@ -1,23 +1,27 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 
-import RecipeReviewCard from '../containers/Cards'
+import EventCard from '../containers/EventCards'
 import Button from '@material-ui/core/Button'
-import '../styles/events.css'
+import '../styles/index.css'
 
 const Events = () => {
   const [startIndex, setStartIndex] = useState(0)
   const [data, setData] = useState([])
-  const limit = 3
+  const [error, setErrorMessage] = useState('')
+  const limit = 10
 
   useEffect(async () => {
     const result = await getData(limit, startIndex)
+    if (!result.data.data.length === 0) setErrorMessage('Error fetching events...')
     setData(result.data.data)
   }, [])
 
   useEffect(async () => {
     const result = await getData(limit, startIndex)
     const updatedData = [...data]
+    if (!result.data.data) setErrorMessage('Error fetching events...')
+
     result.data.data.forEach(item => {
       updatedData.push(item)
     })
@@ -26,7 +30,11 @@ const Events = () => {
   }, [startIndex])
 
   const getData = async (limit, startIndex) => {
-    return await axios.get(`${process.env.REACT_APP_BASEURL}/events/?limit=${limit}&start=${startIndex}`)
+    try {
+      return await axios.get(`${process.env.REACT_APP_BASEURL}/events/?limit=${limit}&start=${startIndex}`)
+    } catch (e) {
+      throw e
+    }
   }
 
   const handleLoadMore = () => {
@@ -35,9 +43,10 @@ const Events = () => {
 
   return (
     <div>
-      <h3>Events</h3>
+      <h3 className="sub-header">Events</h3>
       <div className="eventsContainer">
-        {data && data.map(event => event && <RecipeReviewCard className="event" event={event} />)}
+        {error ? error : ''}
+        {data && data.map((event, index) => event && <EventCard className="event" key={index} event={event} />)}
       </div>
       <Button
         className="load-button"
