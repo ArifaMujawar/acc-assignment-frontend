@@ -1,8 +1,17 @@
-.placeContainer {
+.place-container {
   display: flex;
   flex-direction: row;
   padding: 10px;
   margin: 10px;
   flex-wrap: wrap;
   align-items: center;
+}
+.loading {
+  text-align: center;
+}
+
+.places-container {
+  margin: 0 auto;
+  padding: 10px;
+  background-color: rgb(241, 240, 238);
 }
