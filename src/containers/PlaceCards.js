@@ -29,7 +29,7 @@ export default function PlaceCards({ place }) {
       <CardActionArea>
         <CardMedia
           className={classes.media}
-          image={place.description.images.length > 0 && place.description.images[0].url}
+          image={place.description.images && place.description.images.length > 0 && place.description.images[0].url}
           title={place.name}
         />
         <CardContent>

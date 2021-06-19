@@ -1,14 +1,17 @@
 import Places from './components/Places'
 import Events from './components/Events'
-import './App.css'
+import './styles/index.css'
 
 function App() {
   return (
     <div className="App">
-      <h1>Accenture Assignment</h1>
+      <h1 className="title">Accenture Assignment</h1>
       <Places />
       <hr />
       <Events />
+      <div className="footer">
+        <p>Copyright © 2021</p>
+      </div>
     </div>
   )
 }

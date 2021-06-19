@@ -36,3 +36,22 @@
     transform: rotate(360deg);
   }
 }
+.title {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  padding: 1em;
+  margin-bottom: 10px;
+  background-color: rgb(55, 186, 196);
+  color: #fff;
+  font-family: 'Times New Roman', Times, serif;
+}
+.footer {
+  padding: 0.5em;
+  margin: 10px;
+  background-color: rgb(166, 168, 168);
+  color: #fff;
+  font-family: 'Times New Roman', Times, serif;
+}

@@ -3,18 +3,19 @@ import React, { useEffect, useState } from 'react'
 
 import EventCard from '../containers/EventCards'
 import Button from '@material-ui/core/Button'
-import '../styles/index.css'
 
 const Events = () => {
   const [startIndex, setStartIndex] = useState(0)
   const [data, setData] = useState([])
   const [error, setErrorMessage] = useState('')
+  const [isLoaded, setIsLoaded] = useState(false)
   const limit = 10
 
   useEffect(async () => {
     const result = await getData(limit, startIndex)
     if (!result.data.data.length === 0) setErrorMessage('Error fetching events...')
     setData(result.data.data)
+    setIsLoaded(true)
   }, [])
 
   useEffect(async () => {
@@ -27,6 +28,7 @@ const Events = () => {
     })
 
     setData(updatedData)
+    setIsLoaded(true)
   }, [startIndex])
 
   const getData = async (limit, startIndex) => {
@@ -46,6 +48,7 @@ const Events = () => {
       <h3 className="sub-header">Events</h3>
       <div className="eventsContainer">
         {error ? error : ''}
+        {!isLoaded ? <div className="loading">Loading...</div> : ''}
         {data && data.map((event, index) => event && <EventCard className="event" key={index} event={event} />)}
       </div>
       <Button

@@ -3,11 +3,10 @@ import axios from 'axios'
 import PlaceCards from '../containers/PlaceCards'
 import Button from '@material-ui/core/Button'
 
-import '../styles/index.css'
-
 const Places = () => {
   const [startIndex, setStartIndex] = useState(0)
   const [data, setData] = useState([])
+  const [isLoaded, setIsLoaded] = useState(false)
   const [error, setErrorMessage] = useState('')
   const limit = 10
   const languageFilter = 'fi'
@@ -16,6 +15,7 @@ const Places = () => {
     if (!result.data.length === 0) setErrorMessage('Error fetching places...')
 
     setData(result.data.data)
+    setIsLoaded(true)
   }, [])
 
   useEffect(async () => {
@@ -29,6 +29,7 @@ const Places = () => {
     })
 
     setData(updatedData)
+    setIsLoaded(true)
   }, [startIndex])
 
   const getData = async (limit, startIndex) => {
@@ -46,9 +47,11 @@ const Places = () => {
   }
 
   return (
-    <div>
+    <div className="places-container">
       <h3 className="sub-header">Places</h3>
-      <div className="placeContainer">
+      <div className="place-container">
+        {error}
+        {!isLoaded ? <div className="loading">Loading...</div> : ''}
         {data && data.map((place, index) => place && <PlaceCards className="place" key={index} place={place} />)}
       </div>
       <Button
