@@ -1,0 +1,8 @@
+.eventsContainer {
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  margin: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
