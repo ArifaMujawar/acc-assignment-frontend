@@ -1,6 +1,10 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 
+import RecipeReviewCard from '../containers/Cards'
+import Button from '@material-ui/core/Button'
+import '../styles/events.css'
+
 const Events = () => {
   const [startIndex, setStartIndex] = useState(0)
   const [data, setData] = useState([])
@@ -31,8 +35,19 @@ const Events = () => {
 
   return (
     <div>
-      {data && data.map(event => <p>{event && event.name}</p>)}
-      <button onClick={() => handleLoadMore()}>Load more</button>
+      <h3>Events</h3>
+      <div className="eventsContainer">
+        {data && data.map(event => event && <RecipeReviewCard className="event" event={event} />)}
+      </div>
+      <Button
+        className="load-button"
+        onClick={() => handleLoadMore()}
+        variant="contained"
+        color="primary"
+        disableElevation
+      >
+        Load More
+      </Button>
     </div>
   )
 }
