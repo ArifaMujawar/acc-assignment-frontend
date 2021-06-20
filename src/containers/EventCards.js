@@ -55,7 +55,7 @@ export default function EventCard({ event }) {
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
-            {event.name.charAt(0)}
+            {event.name ? event.name.charAt(0) : 'E'}
           </Avatar>
         }
         action={
@@ -96,8 +96,8 @@ export default function EventCard({ event }) {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>Method:</Typography>
-          <Typography paragraph>{event.description.body}</Typography>
+          <Typography paragraph>Description:</Typography>
+          <Typography paragraph>{event.description && event.description.body}</Typography>
         </CardContent>
       </Collapse>
     </Card>
