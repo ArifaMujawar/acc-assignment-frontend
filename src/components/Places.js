@@ -10,26 +10,35 @@ const Places = () => {
   const [error, setErrorMessage] = useState('')
   const limit = 10
   const languageFilter = 'fi'
-  useEffect(async () => {
-    const result = await getData(limit, startIndex)
-    if (!result.data.length === 0) setErrorMessage('Error fetching places...')
 
-    setData(result.data.data)
-    setIsLoaded(true)
+  useEffect(async () => {
+    try {
+      const result = await getData(limit, startIndex)
+      if (!result.data.length === 0) setErrorMessage('Error fetching places...')
+
+      setData(result.data.data)
+      setIsLoaded(true)
+    } catch (error) {
+      console.log(error)
+    }
   }, [])
 
   useEffect(async () => {
-    const result = await getData(limit, startIndex)
+    try {
+      const result = await getData(limit, startIndex)
 
-    const updatedData = [...data]
-    if (!result.data.length === 0) setErrorMessage('Error fetching places...')
+      const updatedData = [...data]
+      if (!result.data.length === 0) setErrorMessage('Error fetching places...')
 
-    result.data.forEach(item => {
-      updatedData.push(item)
-    })
+      result.data.forEach(item => {
+        updatedData.push(item)
+      })
 
-    setData(updatedData)
-    setIsLoaded(true)
+      setData(updatedData)
+      setIsLoaded(true)
+    } catch (error) {
+      console.log(error)
+    }
   }, [startIndex])
 
   const getData = async (limit, startIndex) => {
@@ -37,8 +46,9 @@ const Places = () => {
       return await axios.get(
         `${process.env.REACT_APP_BASEURL}/places/?limit=${limit}&start=${startIndex}&languageFilter=${languageFilter}`
       )
-    } catch (e) {
-      throw e
+    } catch (error) {
+      setErrorMessage('Failed to fetch data from backend')
+      throw new Error(error)
     }
   }
 
@@ -49,20 +59,26 @@ const Places = () => {
   return (
     <div className="places-container">
       <h3 className="sub-header">Places</h3>
-      <div className="place-container">
-        {error}
-        {!isLoaded ? <div className="loading">Loading...</div> : ''}
-        {data && data.map((place, index) => place && <PlaceCards className="place" key={index} place={place} />)}
-      </div>
-      <Button
-        className="load-button"
-        onClick={() => handleLoadMore()}
-        variant="contained"
-        color="primary"
-        disableElevation
-      >
-        Load More
-      </Button>
+      {error ? (
+        <p className="error-message">{error}</p>
+      ) : (
+        <div>
+          <div className="place-container">
+            {error}
+            {!isLoaded ? <div className="loading">Loading...</div> : ''}
+            {data && data.map((place, index) => place && <PlaceCards className="place" key={index} place={place} />)}
+          </div>
+          <Button
+            className="load-button"
+            onClick={() => handleLoadMore()}
+            variant="contained"
+            color="primary"
+            disableElevation
+          >
+            Load More
+          </Button>
+        </div>
+      )}
     </div>
   )
 }
