@@ -16,7 +16,7 @@ const Places = () => {
       const result = await getData(limit, startIndex)
       if (!result.data.length === 0) setErrorMessage('Error fetching places...')
 
-      setData(result.data.data)
+      setData(result.data.data.places)
       setIsLoaded(true)
     } catch (error) {
       console.log(error)
@@ -30,7 +30,7 @@ const Places = () => {
       const updatedData = [...data]
       if (!result.data.length === 0) setErrorMessage('Error fetching places...')
 
-      result.data.forEach(item => {
+      result.data.places.forEach(item => {
         updatedData.push(item)
       })
 
